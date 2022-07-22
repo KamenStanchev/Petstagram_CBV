@@ -50,6 +50,15 @@ class Profile(models.Model):
         return self.first_name
 
 
+def get_profile():
+    profiles = Profile.objects.all()
+    if profiles:
+        return profiles[0]
+
+
+user_profile = get_profile()
+
+
 class Pet(models.Model):
     TYPES = [(x, x) for x in ("Cat", "Dog", "Bunny", "Parrot", "Fish", "Other")]
     name = models.CharField('Pet name', max_length=30)
@@ -64,6 +73,7 @@ class Pet(models.Model):
     )
     user_profile = models.ForeignKey(
         Profile,
+        default=user_profile.id,
         on_delete=models.CASCADE,
     )
 
