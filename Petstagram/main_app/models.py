@@ -3,7 +3,7 @@ import datetime
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from Petstagram.main_app.validator import only_letters_validator, validate_file_max_size
+from Petstagram.main_app.validator import only_letters_validator
 
 
 class Profile(models.Model):
@@ -56,7 +56,11 @@ def get_profile():
         return profiles[0]
 
 
-user_profile = get_profile()
+if get_profile() is None:
+    user_profile = Profile
+else:
+    current_profile = get_profile()
+    user_profile = current_profile
 
 
 class Pet(models.Model):
