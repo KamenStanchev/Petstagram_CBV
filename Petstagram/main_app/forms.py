@@ -58,6 +58,13 @@ class EditPetForm(forms.ModelForm):
 
 
 class PhotoCreateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+
+
     class Meta:
         model = PetPhoto
         fields = ('photo', 'description', 'tagged_pets')
@@ -86,15 +93,15 @@ class PhotoDeleteForm(forms.ModelForm):
             'description': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'disabled': True,
+                    'readonly': 'readonly',
                 }
             ),
             'tagged_pets': forms.Select(
                 attrs={
                     'class': 'form-control',
-                    'disabled': True,
-                }
-            )}
+                    'readonly': 'readonly',
+                }),
+        }
 
 
 class DeletePetForm(forms.ModelForm):
@@ -104,20 +111,20 @@ class DeletePetForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'disabled': True,
+                    'class ': 'form-control',
+                    'readonly': 'readonly',
                 }
             ),
             'type': forms.Select(
                 attrs={
-                    'class': 'form-control',
-                    'disabled': True,
+                    'class ': 'form-control',
+                    'readonly': 'readonly',
                 }
             ),
             'date_of_birth': DateInput(
                 attrs={
-                    'class': 'form-control',
-                    'disabled': True,
+                    'class ': 'form-control',
+                    'readonly': 'readonly',
                 }),
         }
 

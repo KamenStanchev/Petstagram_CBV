@@ -1,10 +1,11 @@
 from django.contrib.messages import views
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import generic
 
 from Petstagram.main_app.forms import PetForm, EditPetForm, DeletePetForm
 from Petstagram.main_app.models import Pet
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 # def add_pet(request):
@@ -69,7 +70,34 @@ class PetDeleteView(generic.DeleteView):
     template_name = 'pet_delete.html'
     model = Pet
     form_class = DeletePetForm
-    success_url = reverse_lazy('profile_details')
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        context['form'] = DeletePetForm(instance=self.object)
+        return self.render_to_response(context)
+
+    # def post(self, request, *args, **kwargs):
+    #     # Set self.object before the usual form processing flow.
+    #     # Inlined because having DeletionMixin as the first base, for
+    #     # get_success_url(), makes leveraging super() with ProcessFormView
+    #     # overly complex.
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+    #
+    # def form_valid(self, form):
+    #     success_url = self.get_success_url()
+    #     self.object.delete()
+    #     return HttpResponseRedirect(success_url)
+
+    def get_success_url(self):
+        return reverse('profile_details')
+
+
 
 
 #

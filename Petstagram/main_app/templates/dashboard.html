@@ -14,13 +14,19 @@
                     {% for pet in pet_photo.tagged_pets.all %}
                         <!-- Info for each pet on the photo -->
                         <h5 class="card-title">{{ pet.name }}
-{#                            {% if pet.date_of_birth %}#}
-{#                                , age: {{ pet.age }}#}
-{#                            {% endif %}</h5>#}
+                            {% if pet.date_of_birth %}
+                                , age: {{ pet.age }}
+                            {% endif %}</h5>
+                        <hr>
                     {% endfor %}
 
                         <!-- First 30 chars from the description -->
-                        <p class="card-text">{{ pet_photo.description|truncatechars:30}}</p>
+                        {% if pet_photo.description %}
+                            <li>Description: {{ pet_photo.description|truncatechars:30}}</li>
+                        {% else%}
+                            <li>No Description</li>
+                        {% endif%}
+                        <hr>
                         <!-- Button to the Photo Details Page -->
                         <a href="{% url 'photo_details' pet_photo.id %}" class="btn btn-primary">See details</a>
 
