@@ -1,30 +1,9 @@
-from django.contrib.messages import views
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
 from django.views import generic
 
 from Petstagram.main_app.forms import PetForm, EditPetForm, DeletePetForm
 from Petstagram.main_app.models import Pet
 from django.urls import reverse_lazy, reverse
 
-
-# def add_pet(request):
-#     if request.method == 'POST':
-#         profile = get_profile()
-#         form = PetForm(request.POST)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.user_profile = profile
-#             post.save()
-#             return redirect('profile_details')
-#
-#     else:
-#         form = PetForm()
-#
-#     context = {
-#         'form': form,
-# }
-#     return render(request, 'pet_create.html', context )
 
 class AddPetView(generic.CreateView):
     template_name = 'pet_create.html'
@@ -39,33 +18,6 @@ class PetEditView(generic.UpdateView):
     success_url = reverse_lazy('profile_details')
 
 
-# def pet_edit(request, pk):
-#     pet = Pet.objects.get(id=pk)
-#     if request.method == 'POST':
-#         form = EditPetForm(request.POST, instance=pet)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('profile_details')
-#     else:
-#         form = EditPetForm(instance=pet)
-#
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'pet_edit.html', context)
-
-
-# def pet_delete(request, pk):
-#     pet = Pet.objects.get(id=pk)
-#     form = DeletePetForm(instance=pet)
-#     if request.method == 'POST':
-#         pet.delete()
-#         return redirect('home_page')
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'pet_delete.html', context)
-
 class PetDeleteView(generic.DeleteView):
     template_name = 'pet_delete.html'
     model = Pet
@@ -77,37 +29,6 @@ class PetDeleteView(generic.DeleteView):
         context['form'] = DeletePetForm(instance=self.object)
         return self.render_to_response(context)
 
-    # def post(self, request, *args, **kwargs):
-    #     # Set self.object before the usual form processing flow.
-    #     # Inlined because having DeletionMixin as the first base, for
-    #     # get_success_url(), makes leveraging super() with ProcessFormView
-    #     # overly complex.
-    #     self.object = self.get_object()
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    #
-    # def form_valid(self, form):
-    #     success_url = self.get_success_url()
-    #     self.object.delete()
-    #     return HttpResponseRedirect(success_url)
-
     def get_success_url(self):
         return reverse('profile_details')
 
-
-
-
-#
-# def profile_delete(request):
-#     profile = get_profile()
-#     if request.method == 'POST':
-#         profile.delete()
-#         return redirect('home_page')
-#     context={
-#         'full_name': f'{profile.first_name} {profile.last_name}',
-#         'picture': profile.picture,
-#     }
-#     return render(request, 'profile_delete.html', context)
