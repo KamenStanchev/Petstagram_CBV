@@ -23,10 +23,14 @@ class PhotoDeleteView(generic.DeleteView):
         context['form'] = PhotoDeleteForm(instance=self.object)
         return self.render_to_response(context)
 
-    def get_success_url(self):
-        return reverse('dashboard')
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        return self.form_valid(form)
 
     context_object_name = 'photo'
+
+    success_url = reverse_lazy('dashboard')
 
 
 class PhotoEditView(generic.UpdateView):
