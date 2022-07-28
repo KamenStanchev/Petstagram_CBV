@@ -56,14 +56,8 @@ def get_profile():
         return profiles[0]
 
 
-if get_profile() is None:
-    user_profile = Profile
-else:
-    current_profile = get_profile()
-    user_profile = current_profile
-
-
 class Pet(models.Model):
+
     TYPES = [(x, x) for x in ("Cat", "Dog", "Bunny", "Parrot", "Fish", "Other")]
     name = models.CharField('Pet name', max_length=30)
     type = models.CharField(
@@ -77,7 +71,7 @@ class Pet(models.Model):
     )
     user_profile = models.ForeignKey(
         Profile,
-        default=user_profile.id,
+        default=get_profile,
         on_delete=models.CASCADE,
     )
 
