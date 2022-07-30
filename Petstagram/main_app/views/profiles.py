@@ -34,12 +34,12 @@ class ProfileDetailsView(generic.DetailView):
 class CreateProfileView(LoginRequiredMixin, generic.CreateView):
     template_name = 'profile_create.html'
     model = Profile
-    form_class = ProfileForm
+    form_class = EditProfileForm
     success_url = reverse_lazy('home_page')
 
     def dispatch(self, request, *args, **kwargs):
         if Profile.objects.filter(account=self.request.user):
-            return redirect('account_detail', self.request.user.id)
+            return redirect('account_detail')
         return super(CreateProfileView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

@@ -51,7 +51,7 @@ def account_details(request):
     profile = Profile.objects.filter(account_id=current_account.id)
     if profile:
         context = {
-            'profile': profile,
+            'profile': profile[0],
         }
         return render(request, 'account_details.html', context)
     return redirect('create_profile')
