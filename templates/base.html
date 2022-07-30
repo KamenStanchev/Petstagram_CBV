@@ -1,5 +1,19 @@
 {% load profiles %}
 
+<style>
+    .hello-msg{
+        font-size: 18px;
+        color: black;
+        margin-right: 20px;
+    }
+    .messages{
+        font-size: 18px;
+        color: darkred;
+        margin-left: 10px;
+        background-color: yellow;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +30,7 @@
 </head>
 
 <body>
+
 
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:2%">
@@ -47,8 +62,20 @@
             {% endif %}
         </ul>
     </div>
+    <span class="hello-msg">Hello, {{ request.user }}</span>
+    {% if not request.user.is_authenticated %}
+        <span><a  class="hello-msg" href="{% url 'login_page' %}">LogIN</a></span>
+    {% else %}
+        <span><a  class="hello-msg" href="{% url 'logout_page' %}">LogOUT</a></span>
+    {% endif %}
 </nav>
 <!-- End Navigation Bar -->
+
+<div>
+    {% for message in messages %}
+        <h3 class="messages">{{ message }}</h3>
+    {% endfor %}
+</div>
 
 <div class="container">
     {% block page_content %}

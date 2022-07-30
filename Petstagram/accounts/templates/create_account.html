@@ -7,7 +7,14 @@
             <form method="post" action="{% url 'create_account' %}">
 
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% for field in form %}
+                    <p>
+                    {{ field.label }}
+                    </p>
+                    <p>
+                    {{ field }}
+                    </p>
+                {% endfor %}
 
 
                 <button class="btn btn-primary mt-2" type="submit">Registrate</button>
