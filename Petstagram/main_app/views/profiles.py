@@ -1,4 +1,9 @@
+import self as self
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from Petstagram.main_app.forms import ProfileForm, EditProfileForm
@@ -26,17 +31,23 @@ class ProfileDetailsView(generic.DetailView):
         return context
 
 
-class CreateProfileView(generic.CreateView):
+class CreateProfileView(LoginRequiredMixin, generic.CreateView):
+
     template_name = 'profile_create.html'
     model = Profile
     form_class = ProfileForm
     success_url = reverse_lazy('home_page')
 
+    def dispatch(self, request, *args, **kwargs):
+        if Profile.objects.get(account=self.request.user):
+            return redirect('account_detail', self.request.user.id)
+        return super(CreateProfileView, self).dispatch(request, *args, **kwargs)
+
+
+
+
+
     def post(self, request, *args, **kwargs):
-        """
-        Handle POST requests: instantiate a form instance with the passed
-        POST variables and then check if it's valid.
-        """
         form = self.get_form()
         user = request.user
         if form.is_valid():
