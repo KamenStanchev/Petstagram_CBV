@@ -40,8 +40,14 @@ def logout_page(request):
     messages.success(request, 'User was successful LogOut')
     return redirect('login_page')
 
-def account_details():
-    pass
+
+def account_details(request, pk):
+    account = request.user
+    profile = account.profile
+    context={
+        'profile': profile,
+    }
+    return render(request, 'account_details.html', context)
 
 
 def edit_profile():

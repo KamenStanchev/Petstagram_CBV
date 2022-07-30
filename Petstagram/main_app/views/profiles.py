@@ -32,6 +32,19 @@ class CreateProfileView(generic.CreateView):
     form_class = ProfileForm
     success_url = reverse_lazy('home_page')
 
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        user = request.user
+        if form.is_valid():
+            form.instance.account = user
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
 
 class ProfileEditView(generic.UpdateView):
     template_name = 'profile_edit.html'

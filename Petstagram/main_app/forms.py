@@ -151,7 +151,7 @@ class ProfileForm(forms.ModelForm):
                     'class': 'form-control',
                     'placeholder': 'Enter URL',
                 }
-            )
+            ),
         }
 
 

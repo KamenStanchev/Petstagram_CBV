@@ -1,7 +1,9 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.http import request
 
 from Petstagram.main_app.validator import only_letters_validator
 
@@ -44,6 +46,11 @@ class Profile(models.Model):
         default='Do not show',
         null=True,
         blank=True
+    )
+
+    account = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
