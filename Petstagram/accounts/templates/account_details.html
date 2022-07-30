@@ -9,6 +9,7 @@
             <div class="d-inline p-2 w-50">
                 <div class="d-flex flex-column">
                     <h5>{{ request.user }}</h5>
+                    <a href="{% url 'edit_password' %}"><h6>Edit Password</h6></a>
                     <h5><u>Name:</u> {{ profile.first_name }} {{ profile.last_name }}</h5>
                     <h5><u>Profile ID: </u>{{ profile.id }}</h5>
                     <!-- If Date of Birth -->

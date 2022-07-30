@@ -44,7 +44,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home_page' %}">Home</a>
             </li>
-            {% if hp %}
+            {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
             </li>
@@ -57,15 +57,16 @@
                     </li>
                 {% endif %}
             <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile_details' %}">Profile</a>
+            <a class="nav-link" href="{% url 'account_detail'%}">Profile</a>
             </li>
             {% endif %}
         </ul>
     </div>
-    <span class="hello-msg">Hello, {{ request.user }}</span>
     {% if not request.user.is_authenticated %}
+        <span class="hello-msg">Hello, Gest!</span>
         <span><a  class="hello-msg" href="{% url 'login_page' %}">LogIN</a></span>
     {% else %}
+        <span><a  class="hello-msg" href="{% url 'account_detail' %}">{{ request.user }}</a></span>
         <span><a  class="hello-msg" href="{% url 'logout_page' %}">LogOUT</a></span>
     {% endif %}
 </nav>

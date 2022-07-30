@@ -158,7 +158,8 @@ class ProfileForm(forms.ModelForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('account',)
 
         widgets = {
             'first_name': forms.TextInput(
@@ -203,5 +204,5 @@ class EditProfileForm(forms.ModelForm):
                     'placeholder': 'Write description about you',
                     'rows': 3,
                 }
-            )
+            ),
         }

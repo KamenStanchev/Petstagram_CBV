@@ -1,9 +1,14 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import forms, authenticate, login, logout
+from django.contrib.auth import forms, authenticate, login, logout, update_session_auth_hash
+
+from Petstagram.main_app.forms import EditProfileForm
+from Petstagram.main_app.models import Profile
 
 
-def create_accout(request):
+def create_account(request):
     form = forms.UserCreationForm()
 
     if request.method == 'POST':
@@ -38,21 +43,56 @@ def login_page(request):
 def logout_page(request):
     logout(request)
     messages.success(request, 'User was successful LogOut')
-    return redirect('login_page')
+    return redirect('home_page')
 
 
-def account_details(request, pk):
-    account = request.user
-    profile = account.profile
-    context={
-        'profile': profile,
+def account_details(request):
+    current_account = request.user
+    profile = Profile.objects.filter(account_id=current_account.id)
+    if profile:
+        context = {
+            'profile': profile,
+        }
+        return render(request, 'account_details.html', context)
+    return redirect('create_profile')
+
+
+@login_required(login_url='login_page')
+def edit_account(request):
+    current_account = request.user
+    current_profile = Profile.objects.get(account=current_account)
+    if current_profile is None:
+        return redirect('create_profile')
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=current_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account_detail', current_account.id)
+        else:
+            messages.error(request, 'Form is not valid')
+
+    form = EditProfileForm(instance=current_profile)
+    context = {
+        'form': form,
+        'account': current_account,
+        'profile': current_profile,
     }
-    return render(request, 'account_details.html', context)
+    return render(request, 'edit_account.html', context)
 
 
-def edit_profile():
-    pass
-
-
-def edit_password():
-    pass
+@login_required
+def edit_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('account_detail', request.user.id)
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'edit_password.html', {
+        'form': form
+    })

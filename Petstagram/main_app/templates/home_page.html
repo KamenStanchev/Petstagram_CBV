@@ -14,11 +14,16 @@
                     <!-- Button to show if profile created -->
                     <div class="col-lg-6">
                         <p class="lead">
-                            {% if hp %}
-                            <a href="{% url 'dashboard' %}" class="btn btn-lg btn-secondary">Enter</a></p>
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'dashboard' %}" class="btn btn-lg btn-secondary">Enter</a>
+                                or
+                                <a href="{% url 'logout_page' %}" class="btn btn-lg btn-secondary">LogOUT</a>
                             {% else %}
-                            <a href="{% url 'create_profile' %}" class="btn btn-lg btn-secondary">Create Profile</a>
+                                <a href="{% url 'create_account' %}" class="btn btn-lg btn-secondary">Create Account</a>
+                                or
+                                <a href="{% url 'login_page' %}" class="btn btn-lg btn-secondary">LogIN</a>
                             {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
