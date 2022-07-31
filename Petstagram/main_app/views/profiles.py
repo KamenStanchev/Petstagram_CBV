@@ -57,6 +57,12 @@ class ProfileEditView(generic.UpdateView):
     form_class = EditProfileForm
     success_url = reverse_lazy('account_detail')
 
+    def dispatch(self, request, *args, **kwargs):
+        profile = self.get_object()
+        if profile.account != self.request.user:
+            return redirect('account_detail')
+        return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
+
 
 class ProfileDeleteView(generic.DeleteView):
     template_name = 'profile_delete.html'
@@ -64,21 +70,10 @@ class ProfileDeleteView(generic.DeleteView):
     success_url = reverse_lazy('home_page')
 
     def dispatch(self, request, *args, **kwargs):
-
-        # TODO: To check is profile belong to current user
-        # profile = Profile.objects.get(account=request.user)
-        # if profile.account != self.request.user:
-        #     return redirect('account_detail')
+        profile = self.get_object()
+        if profile.account != self.request.user:
+            return redirect('account_detail')
         return super(ProfileDeleteView, self).dispatch(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        user = request.user
-        if form.is_valid():
-            form.instance.account = user
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
 
 
     def get(self, request, *args, **kwargs):

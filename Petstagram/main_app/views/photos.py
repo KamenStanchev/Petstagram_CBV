@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -26,6 +27,12 @@ class PhotoDeleteView(generic.DeleteView):
     model = PetPhoto
     form_class = PhotoDeleteForm
 
+    def dispatch(self, request, *args, **kwargs):
+        photo = self.get_object()
+        if photo.account != self.request.user:
+            return HttpResponse('<h1>It is not your photo. You can not delete it.')
+        return super(PhotoDeleteView, self).dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
@@ -48,6 +55,12 @@ class PhotoEditView(generic.UpdateView):
     form_class = PhotoEditForm
     context_object_name = 'phototo'
     success_url = reverse_lazy('dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        photo = self.get_object()
+        if photo.account != self.request.user:
+            return HttpResponse('<h1>You are trying to cheat the app. It is not your photo. You can not edit it.')
+        return super(PhotoEditView, self).dispatch(request, *args, **kwargs)
 
 
 class PhotoDetailsView(generic.DetailView):

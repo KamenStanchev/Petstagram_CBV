@@ -109,9 +109,10 @@ class PetPhoto(models.Model):
         default=0
     )
 
-    account = models.OneToOneField(
+    account = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        unique=False,
     )
 
     def __str__(self):
