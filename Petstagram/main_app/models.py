@@ -57,10 +57,10 @@ class Profile(models.Model):
         return self.first_name
 
 
-def get_profile():
-    profiles = Profile.objects.all()
-    if profiles:
-        return profiles[0]
+# def get_profile():
+#     profiles = Profile.objects.all()
+#     if profiles:
+#         return profiles[0]
 
 
 class Pet(models.Model):

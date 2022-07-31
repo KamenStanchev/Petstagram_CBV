@@ -8,7 +8,6 @@ from django.views import generic
 
 from Petstagram.main_app.forms import ProfileForm, EditProfileForm
 from Petstagram.main_app.models import PetPhoto, Profile, Pet
-from Petstagram.main_app.views.others import get_profile
 
 
 # class ProfileDetailsView(generic.DetailView):
