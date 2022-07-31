@@ -64,7 +64,6 @@ def get_profile():
 
 
 class Pet(models.Model):
-
     TYPES = [(x, x) for x in ("Cat", "Dog", "Bunny", "Parrot", "Fish", "Other")]
     name = models.CharField('Pet name', max_length=30)
     type = models.CharField(
@@ -76,9 +75,8 @@ class Pet(models.Model):
         null=True,
         blank=True
     )
-    user_profile = models.ForeignKey(
-        Profile,
-        default=get_profile,
+    account = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
     )
 
@@ -87,7 +85,7 @@ class Pet(models.Model):
         return datetime.datetime.now().year - self.date_of_birth.year
 
     class Meta:
-        unique_together = ('user_profile', 'name')
+        unique_together = ('name',)
 
     def __str__(self):
         return self.name
@@ -109,6 +107,11 @@ class PetPhoto(models.Model):
     )
     likes = models.IntegerField(
         default=0
+    )
+
+    account = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):

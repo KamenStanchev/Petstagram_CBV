@@ -19,13 +19,17 @@
             {% endfor %}
             <!-- Description -->
             <p class="mt-2">Description: {{ phototo.description }}</p>
-            <!-- Likes Button -->
-            <a href="{% url 'like_photo' phototo.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+
             <!-- Likes Counter -->
             <p class="mt-2">Likes: {{ phototo.likes }}</p>
-            <!-- Buttons -->
-            <a href="{% url 'photo_edit' phototo.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'photo_delete' phototo.id %}" class="btn btn-danger">Delete</a>
+            {% if request.user.id != phototo.account.id %}
+                <!-- Likes Button -->
+                <a href="{% url 'like_photo' phototo.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            {% else %}
+                <!-- Buttons -->
+                <a href="{% url 'photo_edit' phototo.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'photo_delete' phototo.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

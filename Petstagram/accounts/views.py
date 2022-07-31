@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import forms, authenticate, login, logout, update_session_auth_hash
 
 from Petstagram.main_app.forms import EditProfileForm
-from Petstagram.main_app.models import Profile
+from Petstagram.main_app.models import Profile, Pet
 
 
 def create_account(request):
@@ -45,13 +45,15 @@ def logout_page(request):
     messages.success(request, 'User was successful LogOut')
     return redirect('home_page')
 
-
+@login_required(login_url='login_page')
 def account_details(request):
     current_account = request.user
     profile = Profile.objects.filter(account_id=current_account.id)
+    pets = Pet.objects.filter(account=current_account)
     if profile:
         context = {
             'profile': profile[0],
+            'pets': pets,
         }
         return render(request, 'account_details.html', context)
     return redirect('create_profile')

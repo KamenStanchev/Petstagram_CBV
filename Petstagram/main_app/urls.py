@@ -9,7 +9,7 @@ urlpatterns = [
     path('', generic.HomePageView.as_view(), name='home_page'),
     path('dashboard/', generic.DashboardView.as_view(), name='dashboard'),
 
-    path('profile/', profiles.ProfileDetailsView.as_view(), name='profile_details'),
+    #path('profile/', profiles.ProfileDetailsView.as_view(), name='profile_details'),
     path('profile/create/', profiles.CreateProfileView.as_view(), name='create_profile'),
     path('profile/delete/<str:pk>/', profiles.ProfileDeleteView.as_view(), name='profile_delete'),
     path('profile/edit/<str:pk>/', profiles.ProfileEditView.as_view(), name='profile_edit'),

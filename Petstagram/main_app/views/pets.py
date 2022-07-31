@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views import generic
 
 from Petstagram.main_app.forms import PetForm, EditPetForm, DeletePetForm
@@ -8,7 +9,22 @@ from django.urls import reverse_lazy, reverse
 class AddPetView(generic.CreateView):
     template_name = 'pet_create.html'
     form_class = PetForm
-    success_url = reverse_lazy('profile_details')
+    success_url = reverse_lazy('account_detail')
+
+    # it is useful if one user have only one Pet
+    # def dispatch(self, request, *args, **kwargs):
+    #     if Pet.objects.filter(account=self.request.user):
+    #         return redirect('account_detail')
+    #     return super(AddPetView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        user = request.user
+        if form.is_valid():
+            form.instance.account = user
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class PetEditView(generic.UpdateView):
@@ -16,6 +32,8 @@ class PetEditView(generic.UpdateView):
     model = Pet
     form_class = EditPetForm
     success_url = reverse_lazy('profile_details')
+
+
 
 
 class PetDeleteView(generic.DeleteView):

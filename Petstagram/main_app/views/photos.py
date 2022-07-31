@@ -11,6 +11,15 @@ class AddPhotoView(generic.CreateView):
     form_class = PhotoCreateForm
     success_url = reverse_lazy('dashboard')
 
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        user = request.user
+        if form.is_valid():
+            form.instance.account = user
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
 
 class PhotoDeleteView(generic.DeleteView):
     template_name = 'photo_delete.html'
