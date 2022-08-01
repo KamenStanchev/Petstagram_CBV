@@ -104,14 +104,17 @@ class PetPhoto(models.Model):
         default=0
     )
 
-
-    # TODO: to store acconts, which likes that petPhoto
-    # account_liked_photo = models.CommaSeparatedIntegerField
-
     account = models.ForeignKey(
         User,
+        related_name='account_owner_photo',
         on_delete=models.CASCADE,
         unique=False,
+    )
+
+    list_who_like_photo = models.ManyToManyField(
+        User,
+        related_name='account_liked_photo',
+        blank=True,
     )
 
     def __str__(self):

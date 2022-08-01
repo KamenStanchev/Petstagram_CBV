@@ -31,7 +31,7 @@ class PetEditView(generic.UpdateView):
     template_name = 'pet_edit.html'
     model = Pet
     form_class = EditPetForm
-    success_url = reverse_lazy('profile_details')
+    success_url = reverse_lazy('account_detail')
 
     def dispatch(self, request, *args, **kwargs):
         pet = self.get_object()

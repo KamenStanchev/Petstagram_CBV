@@ -1,13 +1,17 @@
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 
 from Petstagram.main_app.forms import PhotoCreateForm, PhotoEditForm, PhotoDeleteForm
 from Petstagram.main_app.models import PetPhoto
 
 
-class AddPhotoView(generic.CreateView):
+
+class AddPhotoView(LoginRequiredMixin, generic.CreateView):
     template_name = 'photo_create.html'
     form_class = PhotoCreateForm
     success_url = reverse_lazy('dashboard')
@@ -22,7 +26,8 @@ class AddPhotoView(generic.CreateView):
             return self.form_invalid(form)
 
 
-class PhotoDeleteView(generic.DeleteView):
+
+class PhotoDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'photo_delete.html'
     model = PetPhoto
     form_class = PhotoDeleteForm
@@ -49,7 +54,8 @@ class PhotoDeleteView(generic.DeleteView):
     success_url = reverse_lazy('dashboard')
 
 
-class PhotoEditView(generic.UpdateView):
+
+class PhotoEditView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'photo_edit.html'
     model = PetPhoto
     form_class = PhotoEditForm
@@ -63,14 +69,22 @@ class PhotoEditView(generic.UpdateView):
         return super(PhotoEditView, self).dispatch(request, *args, **kwargs)
 
 
-class PhotoDetailsView(generic.DetailView):
+class PhotoDetailsView(LoginRequiredMixin, generic.DetailView):
     template_name = 'photo_details.html'
     model = PetPhoto
     context_object_name = 'phototo'
 
 
+@login_required()
 def like_photo(request, pk):
     pet_photo = PetPhoto.objects.get(id=pk)
-    pet_photo.likes += 1
-    pet_photo.save()
+    current_user = request.user
+    accounts_in_liked_photo = pet_photo.list_who_like_photo.all()
+    if current_user not in accounts_in_liked_photo:
+        pet_photo.likes += 1
+        pet_photo.list_who_like_photo.add(current_user)
+        pet_photo.save()
+        messages.success(request, 'You liked this photo')
+    else:
+        messages.error(request, 'You already liked this photo')
     return redirect('photo_details', pk)
