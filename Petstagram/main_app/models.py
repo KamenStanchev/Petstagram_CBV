@@ -104,6 +104,10 @@ class PetPhoto(models.Model):
         default=0
     )
 
+
+    # TODO: to store acconts, which likes that petPhoto
+    # account_liked_photo = models.CommaSeparatedIntegerField
+
     account = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
