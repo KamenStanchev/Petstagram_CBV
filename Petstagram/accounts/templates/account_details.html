@@ -31,7 +31,7 @@
                 </div>
                 <p class="mt-2">Total Images: {{ total_images }}</p>
                 <p class="mt-2">Total Likes: {{ total_likes }}</p>
-                <a href="{% url 'profile_edit' profile.pk %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'edit_account' %}" class="btn btn-primary">Edit</a>
                 <a href="{% url 'profile_delete' profile.pk %}" class="btn btn-danger">Delete</a>
             </div>
         </div>

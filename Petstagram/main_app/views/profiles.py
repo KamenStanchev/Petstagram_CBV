@@ -1,32 +1,11 @@
-import self as self
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views import generic
+from django.contrib import messages
 
-from Petstagram.main_app.forms import ProfileForm, EditProfileForm
-from Petstagram.main_app.models import PetPhoto, Profile, Pet
-
-
-# class ProfileDetailsView(generic.DetailView):
-#     model = Profile
-#     template_name = 'profile_details.html'
-#     context_object_name = 'profile'
-#
-#     def get_object(self, queryset=None):
-#         obj = get_profile()
-#         return obj
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         profile_images = (PetPhoto.objects.filter(tagged_pets__account=request.user).distinct())
-#         context['profile_images'] = profile_images
-#         context['total_images'] = len(profile_images)
-#         context['total_likes'] = sum(p_pic.likes for p_pic in profile_images)
-#         context['pets'] = Pet.objects.filter(user_profile=profile.id)
-#         return context
+from Petstagram.main_app.forms import EditProfileForm
+from Petstagram.main_app.models import Profile
 
 
 class CreateProfileView(LoginRequiredMixin, generic.CreateView):
@@ -50,17 +29,18 @@ class CreateProfileView(LoginRequiredMixin, generic.CreateView):
             return self.form_invalid(form)
 
 
-class ProfileEditView(generic.UpdateView):
-    template_name = 'profile_edit.html'
-    model = Profile
-    form_class = EditProfileForm
-    success_url = reverse_lazy('account_detail')
-
-    def dispatch(self, request, *args, **kwargs):
-        profile = self.get_object()
-        if profile.account != self.request.user:
-            return redirect('account_detail')
-        return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
+# class ProfileEditView(generic.UpdateView):
+#     template_name = 'profile_edit.html'
+#     model = Profile
+#     form_class = EditProfileForm
+#     success_url = reverse_lazy('account_detail')
+#     messages.success('Profile was updated')
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         profile = self.get_object()
+#         if profile.account != self.request.user:
+#             return redirect('account_detail')
+#         return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
 
 
 class ProfileDeleteView(generic.DeleteView):

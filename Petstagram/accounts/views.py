@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import forms, authenticate, login, logout, update_session_auth_hash
 
 from Petstagram.main_app.forms import EditProfileForm
-from Petstagram.main_app.models import Profile, Pet
+from Petstagram.main_app.models import Profile, Pet, PetPhoto
 
 
 def create_account(request):
@@ -40,6 +40,7 @@ def login_page(request):
     return render(request, 'login_page.html', context)
 
 
+@login_required(login_url=login_page)
 def logout_page(request):
     logout(request)
     messages.success(request, 'User was successful LogOut')
@@ -49,11 +50,16 @@ def logout_page(request):
 def account_details(request):
     current_account = request.user
     profile = Profile.objects.filter(account_id=current_account.id)
+    photos = PetPhoto.objects.filter(account_id=current_account.id)
+    total_images = len(photos)
+    total_likes = sum(p.likes for p in photos)
     pets = Pet.objects.filter(account=current_account)
     if profile:
         context = {
             'profile': profile[0],
             'pets': pets,
+            'total_images': total_images,
+            'total_likes': total_likes,
         }
         return render(request, 'account_details.html', context)
     return redirect('create_profile')
@@ -69,7 +75,8 @@ def edit_account(request):
         form = EditProfileForm(request.POST, instance=current_profile)
         if form.is_valid():
             form.save()
-            return redirect('account_detail', current_account.id)
+            messages.success(request, 'Profile was updated')
+            return redirect('account_detail')
         else:
             messages.error(request, 'Form is not valid')
 
@@ -88,7 +95,7 @@ def edit_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
             return redirect('account_detail', request.user.id)
         else:
