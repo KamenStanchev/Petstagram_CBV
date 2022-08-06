@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^in1%dn-$r80*y5g-1@q6-wd7u3d&$p01o-aav*qj^^%v_*ho(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kamen-petstagram.herokuapp.com', ]
+ALLOWED_HOSTS = ['kamen-petstagram.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
