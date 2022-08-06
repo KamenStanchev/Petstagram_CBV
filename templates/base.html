@@ -38,7 +38,12 @@
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    {% has_profile as hp %}
+{#    {% has_profile as hp %}#}
+{#    {% if request.user.is_authenticated %}#}
+{#        hp = True#}
+{#    {% else %}#}
+{#        hp = False#}
+{#    {% endif %}#}
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
