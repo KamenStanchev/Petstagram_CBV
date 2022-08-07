@@ -48,7 +48,9 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home_page' %}">Home</a>
-                <a class="nav-link" href="{% url 'accounts_list' %}">Users</a>
+            </li>
+            <li>
+                <a class="nav-link" href="{% url 'accounts_list' %}">User's Profiles</a>
             </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item">
