@@ -87,22 +87,31 @@ WSGI_APPLICATION = 'Petstagram.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'petstagram_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1123QwER',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'petstagram_db',
-        'USER': 'postgres',
-        'PASSWORD': '1123QwER',
-        'HOST': '127.0.0.1',
+        'NAME': 'd8eg48l42tdi3p',
+        'USER': 'fxmnukmzxfcjba',
+        'PASSWORD': '34ada3c59006dabdd48dee00179f5aeabb519228d9e61dcdbe08cf4bcd610f9c',
+        'HOST': 'ec2-18-214-35-70.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
-
-
-import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+#
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
