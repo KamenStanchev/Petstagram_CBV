@@ -73,6 +73,7 @@ class AccountsListView(generic.ListView):
     context_object_name = 'users'
 
 
+
 @login_required(login_url='login_page')
 def edit_account(request):
     current_account = request.user

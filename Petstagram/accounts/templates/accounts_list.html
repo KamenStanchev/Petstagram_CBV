@@ -15,19 +15,19 @@
                     <h5><u>Profile ID: </u>{{ user.profile.id }}</h5>
                     <!-- If Date of Birth -->
                     {% if user.profile.date_of_birth %}
-                        <h5><u>Birthdate:</u> {{ profile.date_of_birth }}</h5>
+                        <h5><u>Birthdate:</u> {{ user.profile.date_of_birth }}</h5>
                     {% endif %}
                     <!-- If Email -->
                     {% if user.profile.email %}
-                        <h5><u>Email:</u> {{ profile.email }}</h5>
+                        <h5><u>Email:</u> {{ user.profile.email }}</h5>
                     {% endif %}
                     <!-- If Gender is Chosen -->
                     {% if user.profile.gender %}
-                        <h5><u>Gender:</u> {{ profile.gender }}</h5>
+                        <h5><u>Gender:</u> {{ user.profile.gender }}</h5>
                     {% endif %}
                     <!-- If Description -->
                     {% if user.profile.description %}
-                        <h5><u>Description:</u> {{ profile.description}}</h5>
+                        <h5><u>Description:</u> {{ user.profile.description}}</h5>
                     {% endif %}
                 </div>
                 <p class="mt-2">Total Images: {{ user.profile.photos|length }}</p>
