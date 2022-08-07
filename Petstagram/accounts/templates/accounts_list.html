@@ -30,7 +30,7 @@
                         <h5><u>Description:</u> {{ profile.description}}</h5>
                     {% endif %}
                 </div>
-                <p class="mt-2">Total Images: {{ len(user.profile.photos) }}</p>
+                <p class="mt-2">Total Images: {{ user.profile.photos|length }}</p>
                 <p class="mt-2">Total Likes: {{ total_likes }}</p>
 {#                <a href="{% url 'edit_account' %}" class="btn btn-primary">Edit</a>#}
 {#                <a href="{% url 'profile_delete' profile.pk %}" class="btn btn-danger">Delete</a>#}
