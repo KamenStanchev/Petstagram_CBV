@@ -53,6 +53,16 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
     )
 
+
+    @property
+    def total_likes(self):
+        result = 0
+        photos_of_profile_pets = PetPhoto.objects.filter(account=self.account)
+        if photos_of_profile_pets:
+            for p in photos_of_profile_pets:
+                result += p.likes
+        return result
+
     def __str__(self):
         return self.first_name
 
