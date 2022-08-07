@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import forms, authenticate, login, logout, update_session_auth_hash
+from django.views import generic
 
 from Petstagram.main_app.forms import EditProfileForm
 from Petstagram.main_app.models import Profile, Pet, PetPhoto
@@ -63,6 +65,12 @@ def account_details(request):
         }
         return render(request, 'account_details.html', context)
     return redirect('create_profile')
+
+
+class AccountsListView(generic.ListView):
+    template_name = 'accounts_list.html'
+    model = User
+    context_object_name = 'users'
 
 
 @login_required(login_url='login_page')
