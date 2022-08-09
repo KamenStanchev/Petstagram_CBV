@@ -144,8 +144,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dl8gjgwyv',
+    'API_KEY': '436897878589971',
+    'API_SECRET': 'toxotx4b98eyYgyQWq25ydCYRBE'
+}
+
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
