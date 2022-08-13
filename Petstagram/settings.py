@@ -20,16 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 IS_HEROKU = "DYNO" in os.environ
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^in1%dn-$r80*y5g-1@q6-wd7u3d&$p01o-aav*qj^^%v_*ho('
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = os.getenv('DEBUG') == 'True'
-print(os.getenv('DEBUG'))
-print(DEBUG)
 
 ALLOWED_HOSTS = ['kamen-petstagram.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -104,11 +99,11 @@ WSGI_APPLICATION = 'Petstagram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd8eg48l42tdi3p',
-        'USER': 'fxmnukmzxfcjba',
-        'PASSWORD': '34ada3c59006dabdd48dee00179f5aeabb519228d9e61dcdbe08cf4bcd610f9c',
-        'HOST': 'ec2-18-214-35-70.compute-1.amazonaws.com',
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
         'PORT': '5432',
     }
 }
