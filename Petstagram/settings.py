@@ -20,9 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 IS_HEROKU = "DYNO" in os.environ
 
-
 SECRET_KEY = os.getenv('SECRET_KEY')
-
 
 DEBUG = os.getenv('DEBUG', None) == 'True'
 
@@ -142,12 +140,10 @@ USE_I18N = True
 USE_TZ = True
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dl8gjgwyv',
-    'API_KEY': '436897878589971',
-    'API_SECRET': 'toxotx4b98eyYgyQWq25ydCYRBE'
+    'CLOUD_NAME': os.getenv('CLOUD_NAME', None),
+    'API_KEY': os.getenv('CLOUD_API_KEY', None),
+    'API_SECRET': os.getenv('CLOUD_API_SECRET', None)
 }
-
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
