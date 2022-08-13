@@ -27,7 +27,9 @@ IS_HEROKU = "DYNO" in os.environ
 SECRET_KEY = 'django-insecure-^in1%dn-$r80*y5g-1@q6-wd7u3d&$p01o-aav*qj^^%v_*ho('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
+print(os.getenv('DEBUG'))
+print(DEBUG)
 
 ALLOWED_HOSTS = ['kamen-petstagram.herokuapp.com', 'localhost', '127.0.0.1']
 
