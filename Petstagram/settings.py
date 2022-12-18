@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', None) == 'True'
 
-ALLOWED_HOSTS = ['kamen-petstagram.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -84,16 +84,6 @@ WSGI_APPLICATION = 'Petstagram.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'petstagram_db',
-#         'USER': 'postgres',
-#         'PASSWORD': '1123QwER',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -102,13 +92,13 @@ DATABASES = {
         'USER': os.getenv('DB_USER', None),
         'PASSWORD': os.getenv('DB_PASSWORD', None),
         'HOST': os.getenv('DB_HOST', None),
-        'PORT': '5432',
+        'PORT': '6018',
     }
 }
-# import dj_database_url
-#
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
