@@ -95,10 +95,10 @@ DATABASES = {
         'PORT': '6018',
     }
 }
-import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+#
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -129,11 +129,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME', None),
-    'API_KEY': os.getenv('CLOUD_API_KEY', None),
-    'API_SECRET': os.getenv('CLOUD_API_SECRET', None)
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.getenv('CLOUD_NAME', None),
+#     'API_KEY': os.getenv('CLOUD_API_KEY', None),
+#     'API_SECRET': os.getenv('CLOUD_API_SECRET', None)
+# }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -145,8 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Path where media is stored
 
-
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
