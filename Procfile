@@ -1,1 +1,1 @@
-web: gunicorn Petstagram.wsgi --log-file -
+web: gunicorn Petstagram.wsgi
